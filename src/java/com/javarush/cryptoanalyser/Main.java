@@ -2,7 +2,7 @@ package com.javarush.cryptoanalyser;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
-        System.out.println("GO");
+        CryptoLogic cryptoLogic = new CryptoLogic();
+        cryptoLogic.encryption();
     }
 }
