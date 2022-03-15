@@ -53,8 +53,8 @@ public class CryptoLogic {
 
                         if ( ALPHABET[(char)j] == builder.charAt((char)i)){
 
-                            if (ALPHABET.length <= j+key){
-                                writer.write(ALPHABET[(char)key]);
+                            if (j+key > ALPHABET.length){
+                                writer.write(ALPHABET[(char)key - (ALPHABET.length - j)]);//от ключа отнять количество пройденных букв
                             }else {
                                writer.write(ALPHABET[(char)(j + key)]);
                             }
