@@ -48,11 +48,8 @@ public class CryptoLogic {
                 }
             //encrypting file
                 for (int i = 0; i < builder.length(); i++){
-
                     for (int j = 0; j < ALPHABET.length; j++){
-
                         if ( ALPHABET[(char)j] == builder.charAt((char)i)){
-
                             if (j+key > ALPHABET.length){
                                 writer.write(ALPHABET[(char)key - (ALPHABET.length - j)]);//от ключа отнять количество пройденных букв
                             }else {
@@ -61,7 +58,6 @@ public class CryptoLogic {
                         }
                     }
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
