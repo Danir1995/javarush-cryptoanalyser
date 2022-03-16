@@ -46,17 +46,31 @@ public class CryptoLogic {
                     buffer.clear();
                     bytesRead = channel.read(buffer);
                 }
-            //encrypting file
+                //encrypting file
+                int i1 =(int) key - ((key / (ALPHABET.length + 1)) * (ALPHABET.length + 1));
+
                 for (int i = 0; i < builder.length(); i++){
                     for (int j = 0; j < ALPHABET.length; j++){
                         if ( ALPHABET[(char)j] == builder.charAt((char)i)){
-                            if (j+key > ALPHABET.length){
-                                writer.write(ALPHABET[(char)key - (ALPHABET.length - j)]);//от ключа отнять количество пройденных букв
-                            }else {
-                               writer.write(ALPHABET[(char)(j + key)]);
+                            if (key > ALPHABET.length) {
+                                if (j + i1 > ALPHABET.length) {
+                                    writer.write(ALPHABET[i1 - (ALPHABET.length - j)]);//от ключа отнять количество пройденных букв
+                                } else {
+                                    writer.write(ALPHABET[(char) (j + i1)]);
+                                }
+                            } else {
+                                        if ( ALPHABET[(char)j] == builder.charAt((char)i)){
+                                            if (j+key > ALPHABET.length){
+                                                writer.write(ALPHABET[(char)key - (ALPHABET.length - j)]);//от ключа отнять количество пройденных букв
+                                            }else if (j + key == ALPHABET.length){
+                                                writer.write(ALPHABET[(char)key-1]);
+                                            }else  {
+                                                writer.write(ALPHABET[(char)(j + key)]);
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                        }
-                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
