@@ -118,7 +118,8 @@ public class CryptoLogic {
             }}
                 if (key < 0) {
                     System.out.println("Can not be less than 0");
-                } else {
+                    return;
+                }
                     StringBuilder builder = new StringBuilder();
                     if (Files.isRegularFile(path1)) {
                         try (Writer writer = new BufferedWriter(new FileWriter(encryptedFile))) {
@@ -174,4 +175,3 @@ public class CryptoLogic {
                 }
 
             }
-        }
