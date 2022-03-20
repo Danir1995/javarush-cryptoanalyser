@@ -16,7 +16,7 @@ public class CryptoLogic {
     private static final char[] ALPHABET = {
             'a','b','c','d','e','f','g','h','i','j','k','l',
             'm','n', 'o','p','q','r','s','t','u','v','w','x','y',
-            'z','.', ',', '«', '»', '"', '\'', ':', '!', '?', ' '
+            'z','.', ',', '"', '\'', ':', '!', '?', ' '
              };
 
     public void encryption(){
@@ -120,24 +120,19 @@ public class CryptoLogic {
                     System.out.println("Can not be less than 0");
                     return;
                 }
+
                     StringBuilder builder = new StringBuilder();
                     if (Files.isRegularFile(path1)) {
-                        try (Writer writer = new BufferedWriter(new FileWriter(encryptedFile))) {
-                            RandomAccessFile randomAccessFile = new RandomAccessFile(originalFile, "rw");
-                            FileChannel channel = randomAccessFile.getChannel();
+                        try(Writer writer = new BufferedWriter(new FileWriter(path2.toString()));
+                            BufferedReader reader = new BufferedReader(new FileReader(path1.toString()))) {
+                            if (!Files.isRegularFile(path2)){
 
-                            ByteBuffer buffer = ByteBuffer.allocate(100);
-                            int bytesRead = channel.read(buffer);
+                            Files.createFile(path2);
 
-                            while (bytesRead != -1) {
-                                buffer.flip();
-                                while (buffer.hasRemaining()) {
-                                    builder.append((char) buffer.get());
-                                }
-                                buffer.clear();
-                                bytesRead = channel.read(buffer);
+                        }
+                            while (reader.ready()){
+                                builder.append(reader.readLine());
                             }
-
                             int i1 = (int) key - ((key / (ALPHABET.length)) * (ALPHABET.length));
 
                             for (int i = 0; i < builder.length(); i++) {
@@ -167,7 +162,7 @@ public class CryptoLogic {
                                 }
                             }
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            System.out.println(e);
                         }
                     } else {
                         System.out.println("File name is incorrect or file doesn't exist");
