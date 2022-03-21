@@ -16,7 +16,7 @@ public class Dialog {
         }
         System.out.println("Choose an option of the program: ");
         System.out.println("1: Encrypt file.");
-        System.out.println("2: Decrypt file.");
+        System.out.println("2: Decrypt file with");
         System.out.println("3: Decrypt file with brute - force.");
         System.out.println("4: Decrypt file with static analysis.");
         System.out.println("For cancel - use command: \"CANCEL\"");
@@ -24,6 +24,7 @@ public class Dialog {
         numberOfFunction = scanner.nextLine();
 
         if ((numberOfFunction).equalsIgnoreCase(CANCEL)){
+            System.out.println("closed");
             return;
         }
         switch (Integer.parseInt(numberOfFunction)) {
@@ -38,7 +39,9 @@ public class Dialog {
             }case 3 -> {
                 BruteForce bruteForce = new BruteForce();
                 bruteForce.unblock();
-
+            }case 4 -> {
+                StaticAnalysis staticAnalysis = new StaticAnalysis();
+                staticAnalysis.checkSimilarText();
             }
         }
     }
