@@ -110,9 +110,11 @@ public class CryptoLogic {
         addProhibitedFiles();
 
         Scanner scanner = new Scanner(System.in);
-
+        System.out.println("Write original file: ");
         String originalFile = scanner.nextLine();
+        System.out.println("Write destination file: ");
         String encryptedFile = scanner.nextLine();
+        System.out.println("Key: ");
         int key = scanner.nextInt();
 
         Path path1 = Path.of(originalFile);
@@ -120,8 +122,7 @@ public class CryptoLogic {
 
         for (String prohibited:prohibitedFiles){
             if (originalFile.contains(prohibited) || encryptedFile.contains(prohibited)) {
-                System.out.println("You want to change system file");
-                return;
+               throw new RuntimeException("You want to change system file");
             }
         }
                 if (key < 0) {
@@ -132,17 +133,17 @@ public class CryptoLogic {
                     StringBuilder builder = new StringBuilder();
 
                     if (Files.isRegularFile(path1)) {
+
                         try(Writer writer = new BufferedWriter(new FileWriter(path2.toString()));
                             BufferedReader reader = new BufferedReader(new FileReader(path1.toString()))) {
+
                             if (!Files.isRegularFile(path2)){
-
                             Files.createFile(path2);
-
                         }
                             while (reader.ready()){
                                 builder.append(reader.readLine());
                             }
-                            int i1 = (int) key - ((key / (ALPHABET.length)) * (ALPHABET.length));
+                            int i1 = key - ((key / (ALPHABET.length)) * (ALPHABET.length));
 
                             for (int i = 0; i < builder.length(); i++) {
                                 for (int j = 0; j < ALPHABET.length; j++) {
@@ -178,5 +179,4 @@ public class CryptoLogic {
                     }
                     scanner.close();
                 }
-
             }

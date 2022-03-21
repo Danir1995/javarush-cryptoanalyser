@@ -17,24 +17,28 @@ public class HackingMessage extends CryptoLogic{
 
         Scanner scanner = new Scanner(System.in);
 
-        String encryptedFile = scanner.nextLine();
-        String originalFile = scanner.nextLine();
+            System.out.println("Write encrypted file: ");
+            String encryptedFile = scanner.nextLine();
+            System.out.println("Write destination file to put decrypted message");
+            String originalFile = scanner.nextLine();
+        System.out.println("Key: ");
+            int key = scanner.nextInt();
 
-        int key = scanner.nextInt();
 
         Path path1 = Path.of(originalFile);
         Path path2 = Path.of(encryptedFile);
 
         for (String prohibited:prohibitedFiles){
             if (originalFile.contains(prohibited) || encryptedFile.contains(prohibited)) {
-                System.out.println("You want to change system file");
-                return;
+
+                throw new RuntimeException("You want to change system file");
+
             }
         }
 
         StringBuilder builder = new StringBuilder();
 
-        if (Files.isRegularFile(path1)){
+        if (Files.isRegularFile(path2)){
             try(Writer writer = new BufferedWriter(new FileWriter(originalFile));
                BufferedReader reader = new BufferedReader(new FileReader(encryptedFile))) {
               while (reader.ready()){
@@ -44,16 +48,13 @@ public class HackingMessage extends CryptoLogic{
                     Files.createFile(path1);
                 }
 
-
-
-                int i1 =(int) key - ((key / (ALPHABET.length)) * (ALPHABET.length));
+                int i1 = key - ((key / (ALPHABET.length)) * (ALPHABET.length));
                 for (int i = 0; i < builder.length(); i++){
                     for (int j = 0; j < ALPHABET.length; j++){
                         if ( ALPHABET[(char)j] == builder.toString().toLowerCase(Locale.ROOT).charAt((char)i)){
-
                             if (key >= ALPHABET.length) {
                                 if (j - i1 < 0) {
-                                    writer.write(ALPHABET[(ALPHABET.length-1) - (i1-(j+1))]);
+                                    writer.write(ALPHABET[(ALPHABET.length - 1) - (i1 - (j + 1))]);
                                 }else if (j - i1 == 0){
                                     writer.write(ALPHABET[0]);
                                 } else {
@@ -62,10 +63,10 @@ public class HackingMessage extends CryptoLogic{
                             } else {
                                 if ( ALPHABET[(char)j] == builder.toString().toLowerCase(Locale.ROOT).charAt((char)i)){
                                     if (j-key < 0){
-                                        writer.write(ALPHABET[(ALPHABET.length-1) - (key-(j+1))]);
+                                        writer.write(ALPHABET[(ALPHABET.length - 1) - (key -(j + 1))]);
                                     }else if (j - key == 0){
                                         writer.write(ALPHABET[0]);
-                                    }else  if(j - key>0){
+                                    }else  if(j - key > 0){
                                         writer.write(ALPHABET[(char)(j - key)]);
                                     }
                                 }
@@ -75,7 +76,7 @@ public class HackingMessage extends CryptoLogic{
                 }
 
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
         }else {
             System.out.println("File name is incorrect or file doesn't exist");
