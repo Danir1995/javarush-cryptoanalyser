@@ -12,15 +12,13 @@ import java.util.Scanner;
 import java.nio.channels.FileChannel;
 
 public class CryptoLogic {
-
+    List<String> prohibitedFiles = new ArrayList<>();
     private static final char[] ALPHABET = {
             'a','b','c','d','e','f','g','h','i','j','k','l',
             'm','n', 'o','p','q','r','s','t','u','v','w','x','y',
             'z','.', ',', '"', '\'', ':', '!', '?', ' '
              };
-
-    public void encryption(){
-        List<String> prohibitedFiles = new ArrayList<>();
+    public void addProhibitedFiles(){
         prohibitedFiles.add(".bash_history");
         prohibitedFiles.add(".bash_logout");
         prohibitedFiles.add(".bash_profile");
@@ -102,20 +100,24 @@ public class CryptoLogic {
         prohibitedFiles.add("/usr/sbin");
         prohibitedFiles.add("/var");
 
+    }
+    public void encryption(){
+        addProhibitedFiles();
+
         Scanner scanner = new Scanner(System.in);
 
         String originalFile = scanner.nextLine();
         String encryptedFile = scanner.nextLine();
         int key = scanner.nextInt();
-        String[] arrOfOriginal = originalFile.split("/");
-        String[] arrOfEncrypted = encryptedFile.split("/");
+
         Path path1 = Path.of(originalFile);
         Path path2 = Path.of(encryptedFile);
         for (String prohibited:prohibitedFiles){
             if (originalFile.contains(prohibited) || encryptedFile.contains(prohibited)) {
                 System.out.println("You want to change system file");
                 return;
-            }}
+            }
+        }
                 if (key < 0) {
                     System.out.println("Can not be less than 0");
                     return;
@@ -167,6 +169,7 @@ public class CryptoLogic {
                     } else {
                         System.out.println("File name is incorrect or file doesn't exist");
                     }
+                    scanner.close();
                 }
 
             }

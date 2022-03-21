@@ -17,6 +17,7 @@ public class HackingMessage extends CryptoLogic{
     };
 
     public void unblock(){
+        addProhibitedFiles();
         Scanner scanner = new Scanner(System.in);
 
         String encryptedFile = scanner.nextLine();
@@ -26,7 +27,11 @@ public class HackingMessage extends CryptoLogic{
 
         Path path1 = Path.of(originalFile);
         Path path2 = Path.of(encryptedFile);
-
+        for (String prohibited:prohibitedFiles){
+            if (originalFile.contains(prohibited) || encryptedFile.contains(prohibited)) {
+                System.out.println("You want to change system file");
+                return;
+            }}
         StringBuilder builder = new StringBuilder();
         if (Files.isRegularFile(path1)){
             try(Writer writer = new BufferedWriter(new FileWriter(originalFile));
@@ -35,9 +40,9 @@ public class HackingMessage extends CryptoLogic{
                   builder.append(reader.readLine());
               }
                 if (!Files.isRegularFile(path1)){
-
                     Files.createFile(path1);
                 }
+
 
 
                 int i1 =(int) key - ((key / (ALPHABET.length)) * (ALPHABET.length));
