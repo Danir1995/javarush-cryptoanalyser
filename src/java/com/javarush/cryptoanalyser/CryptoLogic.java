@@ -12,13 +12,17 @@ import java.util.Scanner;
 import java.nio.channels.FileChannel;
 
 public class CryptoLogic {
+
     List<String> prohibitedFiles = new ArrayList<>();
-    private static final char[] ALPHABET = {
+
+    protected static final char[] ALPHABET = {
             'a','b','c','d','e','f','g','h','i','j','k','l',
             'm','n', 'o','p','q','r','s','t','u','v','w','x','y',
             'z','.', ',', '"', '\'', ':', '!', '?', ' '
              };
+
     public void addProhibitedFiles(){
+
         prohibitedFiles.add(".bash_history");
         prohibitedFiles.add(".bash_logout");
         prohibitedFiles.add(".bash_profile");
@@ -102,6 +106,7 @@ public class CryptoLogic {
 
     }
     public void encryption(){
+
         addProhibitedFiles();
 
         Scanner scanner = new Scanner(System.in);
@@ -112,6 +117,7 @@ public class CryptoLogic {
 
         Path path1 = Path.of(originalFile);
         Path path2 = Path.of(encryptedFile);
+
         for (String prohibited:prohibitedFiles){
             if (originalFile.contains(prohibited) || encryptedFile.contains(prohibited)) {
                 System.out.println("You want to change system file");
@@ -124,6 +130,7 @@ public class CryptoLogic {
                 }
 
                     StringBuilder builder = new StringBuilder();
+
                     if (Files.isRegularFile(path1)) {
                         try(Writer writer = new BufferedWriter(new FileWriter(path2.toString()));
                             BufferedReader reader = new BufferedReader(new FileReader(path1.toString()))) {

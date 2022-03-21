@@ -10,14 +10,11 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class HackingMessage extends CryptoLogic{
-    private static final char[] ALPHABET = {
-            'a','b','c','d','e','f','g','h','i','j','k','l',
-            'm','n', 'o','p','q','r','s','t','u','v','w','x','y',
-            'z','.', ',', '"', '\'', ':', '!', '?', ' '
-    };
 
     public void unblock(){
+
         addProhibitedFiles();
+
         Scanner scanner = new Scanner(System.in);
 
         String encryptedFile = scanner.nextLine();
@@ -27,12 +24,16 @@ public class HackingMessage extends CryptoLogic{
 
         Path path1 = Path.of(originalFile);
         Path path2 = Path.of(encryptedFile);
+
         for (String prohibited:prohibitedFiles){
             if (originalFile.contains(prohibited) || encryptedFile.contains(prohibited)) {
                 System.out.println("You want to change system file");
                 return;
-            }}
+            }
+        }
+
         StringBuilder builder = new StringBuilder();
+
         if (Files.isRegularFile(path1)){
             try(Writer writer = new BufferedWriter(new FileWriter(originalFile));
                BufferedReader reader = new BufferedReader(new FileReader(encryptedFile))) {
