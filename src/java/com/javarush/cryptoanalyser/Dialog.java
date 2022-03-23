@@ -7,6 +7,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Dialog {
+
     public static final String CANCEL = "cancel";
 
     void start() {
@@ -18,7 +19,7 @@ public class Dialog {
             System.out.println("Hello dear user!");
             System.out.println("Choose an option of the program: ");
             System.out.println("1: Encrypt file.");
-            System.out.println("2: Decrypt file with");
+            System.out.println("2: Decrypt file with key.");
             System.out.println("3: Decrypt file with brute - force.");
             System.out.println("4: Decrypt file with static analysis.");
             System.out.println("For cancel - use command: \"CANCEL\"");
