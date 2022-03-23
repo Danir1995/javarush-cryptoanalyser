@@ -15,7 +15,8 @@ public class StaticAnalysis extends HackingMessage {
     static int count = 0;
     public void checkSimilarText() throws IOException {
 
-        System.out.println("Lets check a different book of the same author and discover the most usable letters.");
+        System.out.println("Lets check a different book of the same author and discover the most usable letters." +
+                "\nJust put the way to file:");
 
         Scanner scanner = new Scanner(System.in);
 
