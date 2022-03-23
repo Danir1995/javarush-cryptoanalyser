@@ -13,7 +13,7 @@ public class BruteForce extends HackingMessage{
     }
     public void itIsOK() throws IOException {
 
-        System.out.println("This file seems good?");
+        System.out.println("This file seems decrypted?");
         System.out.println("Press \"yes\" or \"no\": ");
 
         Scanner scanner = new Scanner(System.in);
