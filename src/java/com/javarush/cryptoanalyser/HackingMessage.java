@@ -9,16 +9,17 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class HackingMessage extends CryptoLogic{
+public class HackingMessage  extends CryptoLogic{
 
-    public void unblock(){
+    public void unblock() throws IOException {
 
         addProhibitedFiles();
 
         Scanner scanner = new Scanner(System.in);
-
             System.out.println("Write encrypted file: ");
-            String encryptedFile = scanner.nextLine();
+
+                String encryptedFile = scanner.nextLine();
+
             System.out.println("Write destination file to put decrypted message");
             String originalFile = scanner.nextLine();
         System.out.println("Key: ");
@@ -48,38 +49,29 @@ public class HackingMessage extends CryptoLogic{
                     Files.createFile(path1);
                 }
 
-                int i1 = key - ((key / (ALPHABET.length)) * (ALPHABET.length));
+                int countOfSteps = key - ((key / (ALPHABET.length)) * (ALPHABET.length));
+                
                 for (int i = 0; i < builder.length(); i++){
                     for (int j = 0; j < ALPHABET.length; j++){
                         if ( ALPHABET[(char)j] == builder.toString().toLowerCase(Locale.ROOT).charAt((char)i)){
-                            if (key >= ALPHABET.length) {
-                                if (j - i1 < 0) {
-                                    writer.write(ALPHABET[(ALPHABET.length - 1) - (i1 - (j + 1))]);
-                                }else if (j - i1 == 0){
+
+                                if (j - countOfSteps < 0) {
+                                    writer.write(ALPHABET[(ALPHABET.length - 1) - (countOfSteps - (j + 1))]);
+                                }else if (j - countOfSteps == 0){
                                     writer.write(ALPHABET[0]);
                                 } else {
-                                    writer.write(ALPHABET[(char) (j - i1)]);
-                                }
-                            } else {
-                                if ( ALPHABET[(char)j] == builder.toString().toLowerCase(Locale.ROOT).charAt((char)i)){
-                                    if (j-key < 0){
-                                        writer.write(ALPHABET[(ALPHABET.length - 1) - (key -(j + 1))]);
-                                    }else if (j - key == 0){
-                                        writer.write(ALPHABET[0]);
-                                    }else  if(j - key > 0){
-                                        writer.write(ALPHABET[(char)(j - key)]);
-                                    }
+                                    writer.write(ALPHABET[(char) (j - countOfSteps)]);
                                 }
                             }
                         }
                     }
-                }
-
             } catch (IOException e) {
-                System.out.println(e);
+                System.out.println("Some problem, try in 5 minutes");
+                throw new RuntimeException();
             }
         }else {
             System.out.println("File name is incorrect or file doesn't exist");
+            throw new RuntimeException("Please use correct name of file");
         }
 
     }

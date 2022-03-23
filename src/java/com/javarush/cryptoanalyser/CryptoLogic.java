@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +106,7 @@ public class CryptoLogic {
         prohibitedFiles.add("/var");
 
     }
-    public void encryption(){
+    public void encryption() throws IOException, InvalidPathException {
 
         addProhibitedFiles();
 
@@ -143,40 +144,28 @@ public class CryptoLogic {
                             while (reader.ready()){
                                 builder.append(reader.readLine());
                             }
-                            int i1 = key - ((key / (ALPHABET.length)) * (ALPHABET.length));
+                            int countOfSteps = key - ((key / (ALPHABET.length)) * (ALPHABET.length));
 
                             for (int i = 0; i < builder.length(); i++) {
                                 for (int j = 0; j < ALPHABET.length; j++) {
 
                                     if (ALPHABET[(char) j] == builder.toString().toLowerCase(Locale.ROOT).charAt((char) i)) {
-                                        if (key >= ALPHABET.length) {
-                                            if (j + i1 > ALPHABET.length - 1) {
-                                                writer.write(ALPHABET[i1 - (ALPHABET.length - j)]);
-                                            } else if (j + i1 == ALPHABET.length) {
-                                                writer.write(ALPHABET[(char) i1 - 1]);
+
+                                            if (j + countOfSteps > ALPHABET.length - 1) {
+                                                writer.write(ALPHABET[countOfSteps - (ALPHABET.length - j)]);
+                                            } else if (j + countOfSteps == ALPHABET.length) {
+                                                writer.write(ALPHABET[(char) countOfSteps - 1]);
                                             } else {
-                                                writer.write(ALPHABET[(char) (j + i1)]);
-                                            }
-                                        } else {
-                                            if (ALPHABET[(char) j] == builder.toString().toLowerCase(Locale.ROOT).charAt((char) i)) {
-                                                if (j + key > ALPHABET.length) {
-                                                    writer.write(ALPHABET[(char) key - (ALPHABET.length - j)]);
-                                                } else if (j + key == ALPHABET.length) {
-                                                    writer.write(ALPHABET[(char) key - 1]);
-                                                } else {
-                                                    writer.write(ALPHABET[(char) (j + key)]);
-                                                }
+                                                writer.write(ALPHABET[(char) (j + countOfSteps)]);
                                             }
                                         }
                                     }
                                 }
-                            }
                         } catch (IOException e) {
-                            System.out.println(e);
+                            System.out.println("Some problem, show it to your manager" + e);
                         }
                     } else {
                         System.out.println("File name is incorrect or file doesn't exist");
                     }
-                    scanner.close();
                 }
             }

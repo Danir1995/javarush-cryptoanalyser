@@ -1,5 +1,8 @@
 package com.javarush.cryptoanalyser;
 
+import java.io.IOException;
+import java.nio.file.InvalidPathException;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -49,6 +52,13 @@ public class Dialog {
                 }
             } catch (NumberFormatException e){
                 System.out.println("You used wrong command");
+            }catch (InvalidPathException a){
+                System.out.println("Problem with fileName, show it to your manager");
+                System.out.println(a);
+            }
+            catch (IOException a) {
+                System.out.println("Some problem, please show it to your manager");
+                System.out.println( a);
             }
         }
     }

@@ -13,7 +13,7 @@ public class StaticAnalysis extends HackingMessage {
     TreeMap<Character, Integer> letters = new TreeMap<>();
     TreeMap<Integer, Character> sortedLetters = new TreeMap<>();
     static int count = 0;
-    public void checkSimilarText() {
+    public void checkSimilarText() throws IOException {
 
         System.out.println("Lets check a different book of the same author and discover the most usable letters.");
 
@@ -21,7 +21,6 @@ public class StaticAnalysis extends HackingMessage {
 
         String anotherText = scanner.nextLine();
         Path path1 = Path.of(anotherText);
-
         StringBuilder builder = new StringBuilder();
 
         if (Files.isRegularFile(path1)) {
@@ -59,7 +58,7 @@ public class StaticAnalysis extends HackingMessage {
         }
         checkEncryptedText();
     }
-    public void checkEncryptedText() {
+    public void checkEncryptedText() throws IOException {
 
         letters.clear();
         sortedLetters.clear();
