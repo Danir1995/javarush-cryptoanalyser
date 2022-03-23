@@ -15,7 +15,7 @@ public class Dialog {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-
+            System.out.println();
             System.out.println("Hello dear user!");
             System.out.println("Choose an option of the program: ");
             System.out.println("1: Encrypt file.");
@@ -60,6 +60,8 @@ public class Dialog {
             catch (IOException a) {
                 System.out.println("Some problem, please show it to your manager");
                 System.out.println( a);
+            } catch (InputMismatchException e){
+                System.out.println("Your command doesn't match, please use correct command");
             }
         }
     }

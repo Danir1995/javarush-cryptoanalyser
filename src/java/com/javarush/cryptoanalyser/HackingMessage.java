@@ -6,12 +6,13 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class HackingMessage  extends CryptoLogic{
 
-    public void unblock() throws IOException {
+    public void unblock() throws IOException, InputMismatchException {
 
         addProhibitedFiles();
 
@@ -73,6 +74,7 @@ public class HackingMessage  extends CryptoLogic{
             System.out.println("File name is incorrect or file doesn't exist");
             throw new RuntimeException("Please use correct name of file");
         }
+        System.out.println("You decrypted file");
 
     }
 }
