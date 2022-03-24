@@ -12,7 +12,8 @@ public class StaticAnalysis extends DecryptingFile {
    public static TreeMap<Character, Integer> letters = new TreeMap<>();
    public static TreeMap<Integer, Character> sortedLetters = new TreeMap<>();
 
-    static int count = 0;
+    static int counterOfCharacters = 0;
+
     public void checkSimilarText(Scanner scanner) throws IOException {
 
         System.out.println("Lets check a different book of the same author and discover the most usable letters." +
@@ -47,33 +48,34 @@ public class StaticAnalysis extends DecryptingFile {
             for(Map.Entry<Character, Integer> entry : letters.entrySet()) {
                 Character key = entry.getKey();
                 Integer value = entry.getValue();
-                if (value > count){
-                    count = value;
+                if (value > counterOfCharacters){
+                    counterOfCharacters = value;
                 }
                 sortedLetters.put(value, key);
             }
-            System.out.println("The most usable letter is: \"" + sortedLetters.get(count) + "\"\nIt was used: " + count + " times.");
+            System.out.println("The most usable letter is: \"" + sortedLetters.get(counterOfCharacters) + "\"\nIt was used: " + counterOfCharacters + " times.");
         }else {
             System.out.println("File name is incorrect or file doesn't exist!");
             return;
         }
-        checkEncryptedText();
+        checkEncryptedText(new Scanner(System.in));
     }
-    public void checkEncryptedText() throws IOException {
+
+    public void checkEncryptedText(Scanner scanner) throws IOException {
 
         letters.clear();
         sortedLetters.clear();
 
         System.out.println("Now let's check encrypted file and discover the most usable letter.");
-        Scanner scanner = new Scanner(System.in);
+        scanner = ScannerSingleton.getInstance();
 
         String anotherText = scanner.nextLine();
-        Path path1 = Path.of(anotherText);
+        Path pathOfEncryptedText = Path.of(anotherText);
 
         StringBuilder builder = new StringBuilder();
-        int count = 0;
-        if (Files.isRegularFile(path1)) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(path1.toString()))) {
+        counterOfCharacters = 0;
+        if (Files.isRegularFile(pathOfEncryptedText)) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(pathOfEncryptedText.toString()))) {
 
                 while (reader.ready()) {
                     builder.append(reader.readLine());
@@ -95,23 +97,25 @@ public class StaticAnalysis extends DecryptingFile {
             for(Map.Entry<Character, Integer> entry : letters.entrySet()) {
                 Character key = entry.getKey();
                 Integer value = entry.getValue();
-                if (value > count){
-                    count = value;
+                if (value > StaticAnalysis.counterOfCharacters){
+                    StaticAnalysis.counterOfCharacters = value;
                 }
                 sortedLetters.put(value, key);
             }
-            System.out.println("The most usable letter is: \"" + sortedLetters.get(count) + "\"\nIt was used: " + count + " times.");
+            System.out.println("The most usable letter is: \"" + sortedLetters.get(StaticAnalysis.counterOfCharacters) + "\"\nIt was used: " + StaticAnalysis.counterOfCharacters + " times.");
         }else {
             System.out.println("File name is incorrect or file doesn't exist!");
             return;
         }
-        char mostUsable = sortedLetters.get(count);
-        int counterOfIndex = 0;
-        while (ALPHABET[counterOfIndex] != mostUsable){
-            counterOfIndex++;
+        char mostUsable = sortedLetters.get(StaticAnalysis.counterOfCharacters);
+
+        int counterOfIndexFromAlphabet = 0;
+
+        while (ALPHABET[counterOfIndexFromAlphabet] != mostUsable){
+            counterOfIndexFromAlphabet++;
         }
-        System.out.println("Static analysis finished! \nYou have to use key: " + ((ALPHABET.length) - ((ALPHABET.length - 1) - counterOfIndex)));
-            DecryptingFile hackingMessage = new DecryptingFile();
-            hackingMessage.decryptFile();
+        System.out.println("Static analysis finished! \nYou have to use key: " + ((ALPHABET.length) - ((ALPHABET.length - 1) - counterOfIndexFromAlphabet)));
+
+            decryptFile();
     }
 }
