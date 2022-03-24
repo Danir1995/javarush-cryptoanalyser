@@ -14,7 +14,7 @@ import java.nio.channels.FileChannel;
 
 public class CryptoLogic {
 
-    List<String> prohibitedFiles = new ArrayList<>();
+   public static List<String> prohibitedFiles = new ArrayList<>();
 
     protected static final char[] ALPHABET = {
             'a','b','c','d','e','f','g','h','i','j','k','l',
@@ -106,17 +106,19 @@ public class CryptoLogic {
         prohibitedFiles.add("/var");
 
     }
+
     public void encryption() throws IOException, InvalidPathException {
 
         addProhibitedFiles();
 
-        Scanner scanner = new Scanner(System.in);
+        Scanner scannerSingleton = ScannerSingleton.getInstance();
+
         System.out.println("Write original file: ");
-        String originalFile = scanner.nextLine();
+        String originalFile = scannerSingleton.nextLine();
         System.out.println("Write destination file: ");
-        String encryptedFile = scanner.nextLine();
+        String encryptedFile = scannerSingleton.nextLine();
         System.out.println("Key: ");
-        int key = scanner.nextInt();
+        int key = scannerSingleton.nextInt();
 
         Path path1 = Path.of(originalFile);
         Path path2 = Path.of(encryptedFile);
