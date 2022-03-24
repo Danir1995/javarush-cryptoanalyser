@@ -3,29 +3,29 @@ package com.javarush.cryptoanalyser;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class StaticAnalysis extends HackingMessage {
+public class StaticAnalysis extends DecryptingFile {
 
-    TreeMap<Character, Integer> letters = new TreeMap<>();
-    TreeMap<Integer, Character> sortedLetters = new TreeMap<>();
+   public static TreeMap<Character, Integer> letters = new TreeMap<>();
+   public static TreeMap<Integer, Character> sortedLetters = new TreeMap<>();
+
     static int count = 0;
-    public void checkSimilarText() throws IOException {
+    public void checkSimilarText(Scanner scanner) throws IOException {
 
         System.out.println("Lets check a different book of the same author and discover the most usable letters." +
                 "\nJust put the way to file:");
 
-        Scanner scanner = new Scanner(System.in);
+        scanner = ScannerSingleton.getInstance();
 
         String anotherText = scanner.nextLine();
-        Path path1 = Path.of(anotherText);
+        Path pathOfAnotherText = Path.of(anotherText);
         StringBuilder builder = new StringBuilder();
 
-        if (Files.isRegularFile(path1)) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(path1.toString()))) {
+        if (Files.isRegularFile(pathOfAnotherText)) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(pathOfAnotherText.toString()))) {
 
                 while (reader.ready()) {
                     builder.append(reader.readLine());
@@ -111,7 +111,7 @@ public class StaticAnalysis extends HackingMessage {
             counterOfIndex++;
         }
         System.out.println("Static analysis finished! \nYou have to use key: " + ((ALPHABET.length) - ((ALPHABET.length - 1) - counterOfIndex)));
-            HackingMessage hackingMessage = new HackingMessage();
-            hackingMessage.unblock();
+            DecryptingFile hackingMessage = new DecryptingFile();
+            hackingMessage.decryptFile();
     }
 }

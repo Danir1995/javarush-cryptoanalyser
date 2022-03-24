@@ -12,7 +12,7 @@ import java.util.Locale;
 import java.util.Scanner;
 import java.nio.channels.FileChannel;
 
-public class CryptoLogic {
+public class EncryptingFile {
 
    public static List<String> prohibitedFiles = new ArrayList<>();
 
@@ -107,7 +107,7 @@ public class CryptoLogic {
 
     }
 
-    public void encryption(Scanner scanner) throws IOException, InvalidPathException {
+    public void encryptFile(Scanner scanner) throws IOException, InvalidPathException {
 
         addProhibitedFiles();
 
@@ -129,7 +129,7 @@ public class CryptoLogic {
             }
         }
                 if (key < 0) {
-                    System.out.println("Can not be less than 0");
+                    System.out.println("Cipher can not spin to a negative value");
                     return;
                 }
 

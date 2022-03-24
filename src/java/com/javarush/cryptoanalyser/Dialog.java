@@ -2,7 +2,6 @@ package com.javarush.cryptoanalyser;
 
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -35,20 +34,20 @@ public class Dialog {
                 switch (Integer.parseInt(numberOfFunction)) {
 
                     case 1 -> {
-                        CryptoLogic cryptoLogic = new CryptoLogic();
-                        cryptoLogic.encryption();
+                        EncryptingFile cryptoLogic = new EncryptingFile();
+                        cryptoLogic.encryptFile(new Scanner(System.in));
                     }
                     case 2 -> {
-                        HackingMessage hackingMessage = new HackingMessage();
-                        hackingMessage.unblock();
+                        DecryptingFile hackingMessage = new DecryptingFile();
+                        hackingMessage.decryptFile();
                     }
                     case 3 -> {
                         BruteForce bruteForce = new BruteForce();
-                        bruteForce.unblock();
+                        bruteForce.decryptFile();
                     }
                     case 4 -> {
                         StaticAnalysis staticAnalysis = new StaticAnalysis();
-                        staticAnalysis.checkSimilarText();
+                        staticAnalysis.checkSimilarText(new Scanner(System.in));
                     }
                 }
             } catch (NumberFormatException e){

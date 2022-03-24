@@ -1,18 +1,15 @@
 package com.javarush.cryptoanalyser;
 
 import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class HackingMessage  extends CryptoLogic{
+public class DecryptingFile extends EncryptingFile {
 
-    public void unblock() throws IOException, InputMismatchException {
+    public void decryptFile() throws IOException, InputMismatchException {
 
         addProhibitedFiles();
 
@@ -27,8 +24,8 @@ public class HackingMessage  extends CryptoLogic{
             int key = scanner.nextInt();
 
 
-        Path path1 = Path.of(originalFile);
-        Path path2 = Path.of(encryptedFile);
+        Path pathOfOriginalFile = Path.of(originalFile);
+        Path pathOfEncryptedFile = Path.of(encryptedFile);
 
         for (String prohibited:prohibitedFiles){
             if (originalFile.contains(prohibited) || encryptedFile.contains(prohibited)) {
@@ -40,14 +37,14 @@ public class HackingMessage  extends CryptoLogic{
 
         StringBuilder builder = new StringBuilder();
 
-        if (Files.isRegularFile(path2)){
+        if (Files.isRegularFile(pathOfEncryptedFile)){
             try(Writer writer = new BufferedWriter(new FileWriter(originalFile));
                BufferedReader reader = new BufferedReader(new FileReader(encryptedFile))) {
               while (reader.ready()){
                   builder.append(reader.readLine());
               }
-                if (!Files.isRegularFile(path1)){
-                    Files.createFile(path1);
+                if (!Files.isRegularFile(pathOfOriginalFile)){
+                    Files.createFile(pathOfOriginalFile);
                 }
 
                 int countOfSteps = key - ((key / (ALPHABET.length)) * (ALPHABET.length));

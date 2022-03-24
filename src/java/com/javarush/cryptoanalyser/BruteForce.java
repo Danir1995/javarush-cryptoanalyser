@@ -1,14 +1,13 @@
 package com.javarush.cryptoanalyser;
 
 import java.io.IOException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class BruteForce extends HackingMessage{
+public class BruteForce extends DecryptingFile {
 
     @Override
-    public void unblock() throws IOException {
-        super.unblock();
+    public void decryptFile() throws IOException {
+        super.decryptFile();
         itIsOK();
     }
     public void itIsOK() throws IOException {
@@ -24,7 +23,7 @@ public class BruteForce extends HackingMessage{
 
                 String answer = scanner.nextLine();
                 if ("no".equalsIgnoreCase(answer)) {
-                    unblock();
+                    decryptFile();
                     break;
 
                 } else if ("yes".equalsIgnoreCase(answer)) {
