@@ -128,6 +128,7 @@ public class EncryptingFile {
                throw new RuntimeException("You want to change system file");
             }
         }
+
                 if (key < 0) {
                     System.out.println("Cipher can not spin to a negative value");
                     return;
@@ -135,7 +136,7 @@ public class EncryptingFile {
 
                     StringBuilder builder = new StringBuilder();
 
-                    if (Files.isRegularFile(pathOfOriginalFile)) {
+       if (Files.isRegularFile(pathOfOriginalFile)) {
 
                         try(Writer writer = new BufferedWriter(new FileWriter(pathOfEncryptedFile.toString()));
                             BufferedReader reader = new BufferedReader(new FileReader(pathOfOriginalFile.toString()))) {
@@ -163,8 +164,6 @@ public class EncryptingFile {
                                         }
                                     }
                                 }
-                        } catch (IOException e) {
-                            System.out.println("Some problem, show it to your manager" + e);
                         }
                     } else {
                         System.out.println("File name is incorrect or file doesn't exist");

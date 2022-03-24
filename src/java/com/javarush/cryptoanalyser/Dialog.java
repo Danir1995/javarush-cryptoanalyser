@@ -2,6 +2,7 @@ package com.javarush.cryptoanalyser;
 
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -34,20 +35,20 @@ public class Dialog {
                 switch (Integer.parseInt(numberOfFunction)) {
 
                     case 1 -> {
-                        EncryptingFile cryptoLogic = new EncryptingFile();
-                        cryptoLogic.encryptFile(new Scanner(System.in));
+                       AllObjectsToWorkWithCaesarCipher allObjectsToWorkWithCaesarCipher = new AllObjectsToWorkWithCaesarCipher();
+                       allObjectsToWorkWithCaesarCipher.callEncryptingFile();
                     }
                     case 2 -> {
-                        DecryptingFile hackingMessage = new DecryptingFile();
-                        hackingMessage.decryptFile();
+                       AllObjectsToWorkWithCaesarCipher allObjectsToWorkWithCaesarCipher = new AllObjectsToWorkWithCaesarCipher();
+                        allObjectsToWorkWithCaesarCipher.callDecryptingFile();
                     }
                     case 3 -> {
-                        BruteForce bruteForce = new BruteForce();
-                        bruteForce.decryptFile();
+                        AllObjectsToWorkWithCaesarCipher allObjectsToWorkWithCaesarCipher = new AllObjectsToWorkWithCaesarCipher();
+                        allObjectsToWorkWithCaesarCipher.callBruteForce();
                     }
                     case 4 -> {
-                        StaticAnalysis staticAnalysis = new StaticAnalysis();
-                        staticAnalysis.checkSimilarText(new Scanner(System.in));
+                        AllObjectsToWorkWithCaesarCipher allObjectsToWorkWithCaesarCipher = new AllObjectsToWorkWithCaesarCipher();
+                        allObjectsToWorkWithCaesarCipher.callStaticAnalysis();
                     }
                 }
             } catch (NumberFormatException e){

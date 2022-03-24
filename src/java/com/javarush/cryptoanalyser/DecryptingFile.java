@@ -63,9 +63,6 @@ public class DecryptingFile extends EncryptingFile {
                             }
                         }
                     }
-            } catch (IOException e) {
-                System.out.println("Some problem, try in 5 minutes");
-                throw new RuntimeException();
             }
         }else {
             System.out.println("File name is incorrect or file doesn't exist");
