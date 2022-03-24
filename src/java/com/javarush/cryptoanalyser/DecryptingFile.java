@@ -9,11 +9,11 @@ import java.util.Scanner;
 
 public class DecryptingFile extends EncryptingFile {
 
-    public void decryptFile() throws IOException, InputMismatchException {
+    public void decryptFile(Scanner scanner) throws IOException, InputMismatchException {
 
         addProhibitedFiles();
 
-        Scanner scanner = new Scanner(System.in);
+       scanner = ScannerSingleton.getInstance();
             System.out.println("Write encrypted file: ");
 
                 String encryptedFile = scanner.nextLine();
@@ -24,8 +24,9 @@ public class DecryptingFile extends EncryptingFile {
             int key = scanner.nextInt();
 
 
-        Path pathOfOriginalFile = Path.of(originalFile);
+
         Path pathOfEncryptedFile = Path.of(encryptedFile);
+        Path pathOfOriginalFile = Path.of(originalFile);
 
         for (String prohibited:prohibitedFiles){
             if (originalFile.contains(prohibited) || encryptedFile.contains(prohibited)) {
@@ -37,15 +38,17 @@ public class DecryptingFile extends EncryptingFile {
 
         StringBuilder builder = new StringBuilder();
 
+        BufferedReader reader = new BufferedReader(new FileReader(encryptedFile));
+
+        while (reader.ready()){
+            builder.append(reader.readLine());
+        }
+        if (!Files.isRegularFile(pathOfOriginalFile)){
+            Files.createFile(pathOfOriginalFile);
+        }
+
         if (Files.isRegularFile(pathOfEncryptedFile)){
-            try(Writer writer = new BufferedWriter(new FileWriter(originalFile));
-               BufferedReader reader = new BufferedReader(new FileReader(encryptedFile))) {
-              while (reader.ready()){
-                  builder.append(reader.readLine());
-              }
-                if (!Files.isRegularFile(pathOfOriginalFile)){
-                    Files.createFile(pathOfOriginalFile);
-                }
+            try(Writer writer = new BufferedWriter(new FileWriter(originalFile))) {
 
                 int countOfSteps = key - ((key / (ALPHABET.length)) * (ALPHABET.length));
                 
