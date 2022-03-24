@@ -5,9 +5,8 @@ import java.util.Scanner;
 
 public class BruteForce extends DecryptingFile {
 
-    @Override
     public void decryptFile() throws IOException {
-        super.decryptFile();
+        super.decryptFile(new Scanner(System.in));
         itIsOK();
     }
     public void itIsOK() throws IOException {

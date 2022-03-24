@@ -12,7 +12,7 @@ public class AllObjectsToWorkWithCaesarCipher {
     }
     public void callDecryptingFile() throws IOException, InputMismatchException {
         DecryptingFile hackingMessage = new DecryptingFile();
-        hackingMessage.decryptFile();
+        hackingMessage.decryptFile(new Scanner(System.in));
     }
     public void callBruteForce() throws IOException{
         BruteForce bruteForce = new BruteForce();

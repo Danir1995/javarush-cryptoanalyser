@@ -136,30 +136,33 @@ public class EncryptingFile {
 
                     StringBuilder builder = new StringBuilder();
 
+        if (!Files.isRegularFile(pathOfEncryptedFile)){
+            Files.createFile(pathOfEncryptedFile);
+        }
+
+        BufferedReader reader = new BufferedReader(new FileReader(pathOfOriginalFile.toString()));
+
+            while (reader.ready()){
+                builder.append(reader.readLine());
+            }
+
        if (Files.isRegularFile(pathOfOriginalFile)) {
 
-                        try(Writer writer = new BufferedWriter(new FileWriter(pathOfEncryptedFile.toString()));
-                            BufferedReader reader = new BufferedReader(new FileReader(pathOfOriginalFile.toString()))) {
+                        try(Writer writer = new BufferedWriter(new FileWriter(pathOfEncryptedFile.toString()))){
 
-                            if (!Files.isRegularFile(pathOfEncryptedFile)){
-                            Files.createFile(pathOfEncryptedFile);
-                        }
-                            while (reader.ready()){
-                                builder.append(reader.readLine());
-                            }
-                            int countOfSteps = key - ((key / (ALPHABET.length)) * (ALPHABET.length));
+                            int countOfStepsInAlphabetCharacters = key - ((key / (ALPHABET.length)) * (ALPHABET.length));
 
                             for (int i = 0; i < builder.length(); i++) {
                                 for (int j = 0; j < ALPHABET.length; j++) {
 
                                     if (ALPHABET[(char) j] == builder.toString().toLowerCase(Locale.ROOT).charAt((char) i)) {
 
-                                            if (j + countOfSteps > ALPHABET.length - 1) {
-                                                writer.write(ALPHABET[countOfSteps - (ALPHABET.length - j)]);
-                                            } else if (j + countOfSteps == ALPHABET.length) {
-                                                writer.write(ALPHABET[(char) countOfSteps - 1]);
+                                            if (j + countOfStepsInAlphabetCharacters > ALPHABET.length - 1) {
+                                                writer.write(ALPHABET[countOfStepsInAlphabetCharacters - (ALPHABET.length - j)]);
+                                            } else if (j + countOfStepsInAlphabetCharacters == ALPHABET.length) {
+                                                writer.write(ALPHABET[(char) countOfStepsInAlphabetCharacters - 1]);
                                             } else {
-                                                writer.write(ALPHABET[(char) (j + countOfSteps)]);
+                                                writer.write(ALPHABET[(char) (j + countOfStepsInAlphabetCharacters)]);
                                             }
                                         }
                                     }

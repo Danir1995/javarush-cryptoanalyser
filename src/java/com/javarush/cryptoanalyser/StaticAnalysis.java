@@ -126,6 +126,6 @@ public class StaticAnalysis extends DecryptingFile {
 
         System.out.println("Static analysis finished! \nYou have to use key: " + ((ALPHABET.length) - ((ALPHABET.length - 1) - counterOfIndexFromAlphabet)));
 
-            decryptFile();
+            decryptFile(new Scanner(System.in));
     }
 }

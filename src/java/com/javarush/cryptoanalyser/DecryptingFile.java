@@ -50,18 +50,18 @@ public class DecryptingFile extends EncryptingFile {
         if (Files.isRegularFile(pathOfEncryptedFile)){
             try(Writer writer = new BufferedWriter(new FileWriter(originalFile))) {
 
-                int countOfSteps = key - ((key / (ALPHABET.length)) * (ALPHABET.length));
-                
+                int countOfStepsInAlphabetCharacters = key - ((key / (ALPHABET.length)) * (ALPHABET.length));
+
                 for (int i = 0; i < builder.length(); i++){
                     for (int j = 0; j < ALPHABET.length; j++){
                         if ( ALPHABET[(char)j] == builder.toString().toLowerCase(Locale.ROOT).charAt((char)i)){
 
-                                if (j - countOfSteps < 0) {
-                                    writer.write(ALPHABET[(ALPHABET.length - 1) - (countOfSteps - (j + 1))]);
-                                }else if (j - countOfSteps == 0){
+                                if (j - countOfStepsInAlphabetCharacters < 0) {
+                                    writer.write(ALPHABET[(ALPHABET.length - 1) - (countOfStepsInAlphabetCharacters - (j + 1))]);
+                                }else if (j - countOfStepsInAlphabetCharacters == 0){
                                     writer.write(ALPHABET[0]);
                                 } else {
-                                    writer.write(ALPHABET[(char) (j - countOfSteps)]);
+                                    writer.write(ALPHABET[(char) (j - countOfStepsInAlphabetCharacters)]);
                                 }
                             }
                         }
