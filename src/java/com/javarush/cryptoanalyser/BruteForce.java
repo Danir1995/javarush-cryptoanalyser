@@ -23,11 +23,11 @@ public class BruteForce extends HackingMessage{
             if(scanner.hasNextLine()) {
 
                 String answer = scanner.nextLine();
-                if (answer.equalsIgnoreCase("no")) {
+                if ("no".equalsIgnoreCase(answer)) {
                     unblock();
                     break;
 
-                } else if (answer.equalsIgnoreCase("yes")) {
+                } else if ("yes".equalsIgnoreCase(answer)) {
                     System.out.println("You decrypted file!\nCongratulations!");
                     break;
                 }
