@@ -107,21 +107,21 @@ public class CryptoLogic {
 
     }
 
-    public void encryption() throws IOException, InvalidPathException {
+    public void encryption(Scanner scanner) throws IOException, InvalidPathException {
 
         addProhibitedFiles();
 
-        Scanner scannerSingleton = ScannerSingleton.getInstance();
+        scanner = ScannerSingleton.getInstance();
 
         System.out.println("Write original file: ");
-        String originalFile = scannerSingleton.nextLine();
+        String originalFile = scanner.nextLine();
         System.out.println("Write destination file: ");
-        String encryptedFile = scannerSingleton.nextLine();
+        String encryptedFile = scanner.nextLine();
         System.out.println("Key: ");
-        int key = scannerSingleton.nextInt();
+        int key = scanner.nextInt();
 
-        Path path1 = Path.of(originalFile);
-        Path path2 = Path.of(encryptedFile);
+        Path pathOfOriginalFile = Path.of(originalFile);
+        Path pathOfEncryptedFile = Path.of(encryptedFile);
 
         for (String prohibited:prohibitedFiles){
             if (originalFile.contains(prohibited) || encryptedFile.contains(prohibited)) {
@@ -135,13 +135,13 @@ public class CryptoLogic {
 
                     StringBuilder builder = new StringBuilder();
 
-                    if (Files.isRegularFile(path1)) {
+                    if (Files.isRegularFile(pathOfOriginalFile)) {
 
-                        try(Writer writer = new BufferedWriter(new FileWriter(path2.toString()));
-                            BufferedReader reader = new BufferedReader(new FileReader(path1.toString()))) {
+                        try(Writer writer = new BufferedWriter(new FileWriter(pathOfEncryptedFile.toString()));
+                            BufferedReader reader = new BufferedReader(new FileReader(pathOfOriginalFile.toString()))) {
 
-                            if (!Files.isRegularFile(path2)){
-                            Files.createFile(path2);
+                            if (!Files.isRegularFile(pathOfEncryptedFile)){
+                            Files.createFile(pathOfEncryptedFile);
                         }
                             while (reader.ready()){
                                 builder.append(reader.readLine());
