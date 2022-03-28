@@ -32,22 +32,23 @@ public class Dialog {
                     return;
                 }
 
+                AllObjectsToWorkWithCaesarCipher allObjectsToWorkWithCaesarCipher = new AllObjectsToWorkWithCaesarCipher();
                 switch (Integer.parseInt(numberOfFunction)) {
-
                     case 1 -> {
-                       AllObjectsToWorkWithCaesarCipher allObjectsToWorkWithCaesarCipher = new AllObjectsToWorkWithCaesarCipher();
+
                        allObjectsToWorkWithCaesarCipher.callEncryptingFile();
                     }
                     case 2 -> {
-                       AllObjectsToWorkWithCaesarCipher allObjectsToWorkWithCaesarCipher = new AllObjectsToWorkWithCaesarCipher();
+
                         allObjectsToWorkWithCaesarCipher.callDecryptingFile();
                     }
                     case 3 -> {
-                        AllObjectsToWorkWithCaesarCipher allObjectsToWorkWithCaesarCipher = new AllObjectsToWorkWithCaesarCipher();
+
                         allObjectsToWorkWithCaesarCipher.callBruteForce();
+
                     }
                     case 4 -> {
-                        AllObjectsToWorkWithCaesarCipher allObjectsToWorkWithCaesarCipher = new AllObjectsToWorkWithCaesarCipher();
+
                         allObjectsToWorkWithCaesarCipher.callStaticAnalysis();
                     }
                 }
