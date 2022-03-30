@@ -3,16 +3,15 @@ package com.javarush.cryptoanalyser;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.util.InputMismatchException;
-import java.util.Scanner;
 
-public class AllObjectsToWorkWithCaesarCipher {
+public class CaesarCipherOperations extends EncryptingFile{
     public void callEncryptingFile() throws IOException, InvalidPathException {
         EncryptingFile cryptoLogic = new EncryptingFile();
-        cryptoLogic.encryptFile(new Scanner(System.in));
+        cryptoLogic.encryptFile(ScannerSingleton.getInstance());
     }
     public void callDecryptingFile() throws IOException, InputMismatchException {
         DecryptingFile hackingMessage = new DecryptingFile();
-        hackingMessage.decryptFile(new Scanner(System.in));
+        hackingMessage.decryptFile();
     }
     public void callBruteForce() throws IOException{
         BruteForce bruteForce = new BruteForce();
@@ -20,7 +19,7 @@ public class AllObjectsToWorkWithCaesarCipher {
     }
     public void callStaticAnalysis() throws IOException{
         StaticAnalysis staticAnalysis = new StaticAnalysis();
-        staticAnalysis.checkSimilarText(new Scanner(System.in));
+        staticAnalysis.checkSimilarText();
     }
 }
 

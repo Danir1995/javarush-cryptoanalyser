@@ -6,24 +6,23 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 import java.nio.channels.FileChannel;
 
 public class EncryptingFile {
 
    public static List<String> prohibitedFiles = new ArrayList<>();
-
-    protected static final char[] ALPHABET = {
+   public static final char[] ALPHABET = {
             'a','b','c','d','e','f','g','h','i','j','k','l',
             'm','n', 'o','p','q','r','s','t','u','v','w','x','y',
             'z','.', ',', '"', '\'', ':', '!', '?', ' '
              };
+   public static HashMap<Character, Character> mapping = new HashMap<>();
+   public HashMap<Character, Character> getMapping(){
+        return mapping;
+   }
 
-    public void addProhibitedFiles(){
-
+   public void addProhibitedFiles(){
         prohibitedFiles.add(".bash_history");
         prohibitedFiles.add(".bash_logout");
         prohibitedFiles.add(".bash_profile");
@@ -104,15 +103,11 @@ public class EncryptingFile {
         prohibitedFiles.add("/usr/local/bin");
         prohibitedFiles.add("/usr/sbin");
         prohibitedFiles.add("/var");
-
     }
 
     public void encryptFile(Scanner scanner) throws IOException, InvalidPathException {
-
         addProhibitedFiles();
-
         scanner = ScannerSingleton.getInstance();
-
         System.out.println("Write original file: ");
         String originalFile = scanner.nextLine();
         System.out.println("Write destination file: ");
@@ -125,51 +120,33 @@ public class EncryptingFile {
 
         for (String prohibited:prohibitedFiles){
             if (originalFile.contains(prohibited) || encryptedFile.contains(prohibited)) {
-               throw new RuntimeException("You want to change system file");
+                throw new RuntimeException("You want to change system file");
             }
         }
 
-                if (key < 0) {
-                    System.out.println("Cipher can not spin to a negative value");
-                    return;
-                }
-
-                    StringBuilder builder = new StringBuilder();
+        if (key < 0) {
+            System.out.println("Cipher can not spin to a negative value");
+            return;
+        }
 
         if (!Files.isRegularFile(pathOfEncryptedFile)){
             Files.createFile(pathOfEncryptedFile);
         }
 
-        BufferedReader reader = new BufferedReader(new FileReader(pathOfOriginalFile.toString()));
-
-            while (reader.ready()){
-                builder.append(reader.readLine());
-            }
+        for (int i = 0; i < ALPHABET.length; i++) {
+            mapping.put(ALPHABET[i], ALPHABET[((ALPHABET.length) + i + key) % (ALPHABET.length)]);
+        }
 
        if (Files.isRegularFile(pathOfOriginalFile)) {
-
-                        try(Writer writer = new BufferedWriter(new FileWriter(pathOfEncryptedFile.toString()))){
-
-                            int countOfStepsInAlphabetCharacters = key - ((key / (ALPHABET.length)) * (ALPHABET.length));
-
-                            for (int i = 0; i < builder.length(); i++) {
-                                for (int j = 0; j < ALPHABET.length; j++) {
-
-                                    if (ALPHABET[(char) j] == builder.toString().toLowerCase(Locale.ROOT).charAt((char) i)) {
-
-                                            if (j + countOfStepsInAlphabetCharacters > ALPHABET.length - 1) {
-                                                writer.write(ALPHABET[countOfStepsInAlphabetCharacters - (ALPHABET.length - j)]);
-                                            } else if (j + countOfStepsInAlphabetCharacters == ALPHABET.length) {
-                                                writer.write(ALPHABET[(char) countOfStepsInAlphabetCharacters - 1]);
-                                            } else {
-                                                writer.write(ALPHABET[(char) (j + countOfStepsInAlphabetCharacters)]);
-                                            }
-                                        }
-                                    }
-                                }
-                        }
-                    } else {
-                        System.out.println("File name is incorrect or file doesn't exist");
-                    }
-                }
-            }
+           char[] data = Files.readString(pathOfOriginalFile).toLowerCase().toCharArray();
+           for (int i = 0; i < data.length; i++) {
+               if(mapping.containsKey(data[i])) {
+                   data[i] = mapping.get(data[i]);
+               }
+           }
+           Files.writeString(pathOfEncryptedFile, String.valueOf(data));
+       } else {
+           System.out.println("File name is incorrect or file doesn't exist");
+       }
+    }
+}
