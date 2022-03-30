@@ -11,12 +11,12 @@ public class BruteForce extends DecryptingFile {
     public void FileIsDecrypted() throws IOException {
         System.out.println("This file seems decrypted?");
         System.out.println("Press \"yes\" or \"no\": ");
-        while (ScannerSingleton.getInstance().hasNextLine()) {
-            String answer = ScannerSingleton.getInstance().nextLine();
 
+        while (true) {
+            String answer = ScannerSingleton.getInstance().nextLine();
             if ("no".equalsIgnoreCase(answer)) {
                 decryptFile();
-
+                break;
             } else if ("yes".equalsIgnoreCase(answer)) {
                 System.out.println("You decrypted file!\nCongratulations!");
                 break;

@@ -59,7 +59,7 @@ public class StaticAnalysis extends DecryptingFile {
        sortedLetters.clear();
 
        System.out.println("Now let's check encrypted file and discover the most usable letter.");
-        Scanner scanner = ScannerSingleton.getInstance();
+       Scanner scanner = ScannerSingleton.getInstance();
        String anotherText = scanner.nextLine();
        Path pathOfEncryptedText = Path.of(anotherText);
 

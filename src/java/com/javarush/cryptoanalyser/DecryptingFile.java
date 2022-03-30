@@ -35,7 +35,11 @@ public class DecryptingFile extends EncryptingFile {
         mapping.clear();
 
         for (int i = 0; i < ALPHABET.length; i++) {
-            mapping.put(ALPHABET[i], ALPHABET[((ALPHABET.length) + i - key) % (ALPHABET.length)]);
+            if (key > ALPHABET.length) {
+                mapping.put(ALPHABET[i], ALPHABET[((ALPHABET.length) + i - (key % ALPHABET.length)) % (ALPHABET.length)]);
+            } else {
+                mapping.put(ALPHABET[i], ALPHABET[((ALPHABET.length) + i - key) % (ALPHABET.length)]);
+            }
         }
 
         if (Files.isRegularFile(pathOfEncryptedFile)){

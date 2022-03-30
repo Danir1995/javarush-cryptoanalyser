@@ -13,8 +13,7 @@ public class Dialogue {
     private static final int STATIC_ANALYSIS = 4;
     private static final String CANCEL_FROM_GAME = "cancel";
 
-    void start(Scanner scannerSingleton) {
-
+    void start() {
         try {
             System.out.println();
             System.out.println("Hello dear user!");
@@ -25,7 +24,8 @@ public class Dialogue {
             System.out.println("4: Decrypt file with static analysis.");
             System.out.println("For cancel - use command: \"CANCEL\"");
 
-            String numberOfFunction = scannerSingleton.nextLine();
+            String numberOfFunction = ScannerSingleton.getInstance().nextLine();
+
             if ((CANCEL_FROM_GAME).equalsIgnoreCase(numberOfFunction)) {
                 System.out.println("closed");
                 return;
@@ -50,6 +50,5 @@ public class Dialogue {
         } catch (InputMismatchException e){
             System.out.println("Your command doesn't match, please use correct command");
         }
-        start(scannerSingleton);
     }
 }
